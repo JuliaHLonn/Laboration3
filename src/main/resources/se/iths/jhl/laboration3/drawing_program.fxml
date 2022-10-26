@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.iths.jhl.laboration3.Controller.DrawingProgramController">
+   <top>
+
+   </top>
+    <center>
+      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #FFFAE7">
+          <Label fx:id="welcomeText" alignment="CENTER" prefWidth="800.0" style="-fx-background-color: #EDDBC0; -fx-font-weight: bold; -fx-border-color: #DBC8AC; -fx-border-style: dashed;     -fx-border-width: 3" text="Draw things" />
+          <Canvas fx:id="canvas" height="800.0" width="700.0" />
+
+      <Label layoutX="400.0" prefHeight="58.0" prefWidth="260.0" text="Click on the shape you want to draw" textAlignment="CENTER">
+            <font>
+               <Font name="Bodoni MT" size="14.0" />
+            </font>
+            <padding>
+               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding></Label>
+         <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER">
+            <VBox.margin>
+               <Insets bottom="20.0" left="20.0" right="20.0" />
+            </VBox.margin>
+            <children>
+      
+                <Circle fx:id="cirkle" fill="#DD5353" onMouseClicked="#drawCirkle" radius="10" stroke="#B73E3E" strokeType="INSIDE">
+                  <FlowPane.margin>
+                     <Insets left="20.0" right="20.0" />
+                  </FlowPane.margin></Circle>
+                <Rectangle fx:id="rectangle" fill="#59ffa4" height="20.0" stroke="#5f9652" strokeType="INSIDE" width="20.0"
+                           onMouseClicked="#onRectangleClicked">
+                  <FlowPane.margin>
+                     <Insets left="20.0" right="20.0" />
+                  </FlowPane.margin></Rectangle>
+            </children>
+         </FlowPane>
+
+      
+      
+      
+      </VBox>
+   </center>
+</BorderPane>
