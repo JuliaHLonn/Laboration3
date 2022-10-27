@@ -21,9 +21,14 @@ public class ShapeModel {
 
     public Rectangle rectangle;
 
+    public Color color;
     public static List<ShapeModel> listOfShapeObjects = new ArrayList<>();
 
 
+    public ShapeModel(){}
+    public ShapeModel(Color color){
+        this.color = color;
+    }
     public void printList(){
         for (var shape: listOfShapeObjects
         ) {
@@ -31,8 +36,10 @@ public class ShapeModel {
 
         }
     }
-    public void createCirkleObject(Color color) {
-        listOfShapeObjects.add(new CirkleModel(color));
+
+
+    public void setColor(Color color){
+        this.color = color;
     }
 
     @Override
@@ -49,9 +56,11 @@ public class ShapeModel {
     public String toString() {
         return super.toString();
     }
-
-    public void createRectangleObject(Color color) {
-        listOfShapeObjects.add(new RectangleModel(color));
+    public void createCirkleObject(Color color, double radius) {
+        listOfShapeObjects.add(new CirkleModel(color, radius));
+    }
+    public void createRectangleObject(Color color, double x, double y) {
+        listOfShapeObjects.add(new RectangleModel(color, x, y));
     }
 
 

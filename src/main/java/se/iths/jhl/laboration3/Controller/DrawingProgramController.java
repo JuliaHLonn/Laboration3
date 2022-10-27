@@ -50,21 +50,24 @@ public class DrawingProgramController {
 
     public void drawRectangle(MouseEvent mouseEvent) {
         Color color = colorPicker.getValue();
-        shapeModel.createRectangleObject(color);
+        shapeModel.createRectangleObject(color, 20, 20);
         context.setFill(colorPicker.getValue());
         context.fillRect(mouseEvent.getX() - 10, mouseEvent.getY() - 10, 20, 20);
     }
 
     public void drawCirkle(MouseEvent mouseEvent) {
         Color color = colorPicker.getValue();
-        shapeModel.createCirkleObject(color);
+        shapeModel.createCirkleObject(color, 20);
         context.setFill(colorPicker.getValue());
         context.fillOval(mouseEvent.getX() - 10, mouseEvent.getY() - 10, 20, 20);
     }
 
+/*public void changeColor(MouseEvent mouseEvent){
 
-//Todo: Det verkar inte fungera att lägga till i lista, fixa
-    // ToDo: Lägg till Färg och storlek som fält i formernas klass
+    System.out.println(mouseEvent.getSource());
+
+}*/
+
     //Todo: Lägg till Undo funktionen
     // Todo: Lägg till funktion för att ändra storlek
     // Todo: Lägg till funktion för att ändra färg

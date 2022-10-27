@@ -5,17 +5,18 @@ import javafx.scene.shape.Rectangle;
 
 public class RectangleModel extends ShapeModel{
 
-    public Color color;
+    public double sizeX;
+    public double sizeY;
 
 
-    public RectangleModel(Color color) {
-        this.color = color;
+    public RectangleModel(Color color, double x, double y) {
+        super(color);
+        this.sizeX = x;
+        this.sizeY = y;
 
     }
 
-    public void setColor(Color color){
-        this.color = color;
-    }
+
 
     public void setSize(double x, double y) {
 
