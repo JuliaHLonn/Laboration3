@@ -3,11 +3,11 @@ package se.iths.jhl.laboration3.Controller;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+
 
 public class DrawingProgramController {
     @FXML
@@ -17,43 +17,36 @@ public class DrawingProgramController {
     @FXML
     public Canvas canvas;
 
+
     @FXML
-    public Circle circle; // Har definierat som klassen cirkle förut vilken extendar shape
+    public RadioButton cirkleButton;
 
-    public Rectangle rectangle;
+    @FXML
+    public RadioButton rectangleButton;
+
+    @FXML
+    public ColorPicker colorPicker;
 
 
-    public void onRectangleClicked(MouseEvent mouseEvent) {
+    @FXML
+    public void onCanvasClicked(MouseEvent mouseEvent){
         context = canvas.getGraphicsContext2D();
-        context.setFill(Color.web("C8DBBE"));
+        if(cirkleButton.isSelected())
+            drawCirkle(mouseEvent);
+        else if(rectangleButton.isSelected())
+            drawRectangle(mouseEvent);
 
-        double xPosition = mouseEvent.getSceneX();
-        double yPosition = mouseEvent.getSceneY();
-        createShape(context, xPosition,yPosition); // Storleken sist
-    }
-
-    private void createShape(GraphicsContext context, double x, double y) {
-        context.fillRect(x,y,20,20);
-    }
-
-
-    @FXML
-    public void drawCirkle(MouseEvent mouseEvent) {
-        context.setFill(Color.web("C8DBBE"));
-       // context.fillOval(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 10,10);
-        mouseEvent.clone();
-    }
-
-    @FXML
-    public void drawRectangle(MouseEvent mouseEvent) {
-       // double xPosition = mouseEvent.getScreenX();
-        context.setFill(Color.web("C8DBBE"));
-        context.fillRect(mouseEvent.getSceneX(), mouseEvent.getSceneY(), 0,0);
 
     }
 
-    public void getClickPosition() {
+    private void drawRectangle(MouseEvent mouseEvent) {
+        context.setFill(colorPicker.getValue());
+        context.fillRect(mouseEvent.getX()-10, mouseEvent.getY()-10,20,20);
+    }
 
+    private void drawCirkle(MouseEvent mouseEvent) {
+        context.setFill(colorPicker.getValue());
+        context.fillOval(mouseEvent.getX()-10, mouseEvent.getY()-10,20,20);
     }
 
 
