@@ -7,6 +7,11 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import se.iths.jhl.laboration3.Model.ShapeModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DrawingProgramController {
@@ -27,27 +32,42 @@ public class DrawingProgramController {
     @FXML
     public ColorPicker colorPicker;
 
+    public ShapeModel shapeModel = new ShapeModel();
+
+    public void initialize() {
+
+    }
 
     @FXML
-    public void onCanvasClicked(MouseEvent mouseEvent){
+    public void onCanvasClicked(MouseEvent mouseEvent) {
         context = canvas.getGraphicsContext2D();
-        if(cirkleButton.isSelected())
+        if (cirkleButton.isSelected())
             drawCirkle(mouseEvent);
-        else if(rectangleButton.isSelected())
+        else if (rectangleButton.isSelected())
             drawRectangle(mouseEvent);
-
-
+       shapeModel.printList();
     }
 
-    private void drawRectangle(MouseEvent mouseEvent) {
+    public void drawRectangle(MouseEvent mouseEvent) {
+        Color color = colorPicker.getValue();
+        shapeModel.createRectangleObject(color);
         context.setFill(colorPicker.getValue());
-        context.fillRect(mouseEvent.getX()-10, mouseEvent.getY()-10,20,20);
+        context.fillRect(mouseEvent.getX() - 10, mouseEvent.getY() - 10, 20, 20);
     }
 
-    private void drawCirkle(MouseEvent mouseEvent) {
+    public void drawCirkle(MouseEvent mouseEvent) {
+        Color color = colorPicker.getValue();
+        shapeModel.createCirkleObject(color);
         context.setFill(colorPicker.getValue());
-        context.fillOval(mouseEvent.getX()-10, mouseEvent.getY()-10,20,20);
+        context.fillOval(mouseEvent.getX() - 10, mouseEvent.getY() - 10, 20, 20);
     }
+
+
+//Todo: Det verkar inte fungera att lägga till i lista, fixa
+    // ToDo: Lägg till Färg och storlek som fält i formernas klass
+    //Todo: Lägg till Undo funktionen
+    // Todo: Lägg till funktion för att ändra storlek
+    // Todo: Lägg till funktion för att ändra färg
 
 
 }

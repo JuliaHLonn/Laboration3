@@ -32,7 +32,7 @@
        </ToolBar>
    </top>
     <center>
-      <VBox alignment="CENTER" prefHeight="800.0" prefWidth="700.0" style="-fx-background-color: #FFFAE7">
+      <VBox alignment="CENTER" prefHeight="800.0" prefWidth="700.0" style="-fx-background-color: white">
 
           <Canvas fx:id="canvas" height="800.0" width="700.0" onMouseClicked="#onCanvasClicked"/>
 
