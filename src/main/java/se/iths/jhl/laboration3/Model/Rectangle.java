@@ -22,6 +22,7 @@ public class Rectangle extends Shape {
 
 
     public Rectangle(Color color, double sizeX, double sizeY, double xCoordinate, double yCoordinate) {
+
         this.color = color;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
@@ -85,10 +86,10 @@ public class Rectangle extends Shape {
 //        }
 //        return bool;
        // public static void isSelected(double x, double y) {
-            double x1 = xCoordinate - 10;
-            double x2 = xCoordinate + 10;
-            double y1 = yCoordinate - 10;
-            double y2 = yCoordinate + 10;
+            double x1 = xCoordinate - 11;
+            double x2 = xCoordinate + 11;
+            double y1 = yCoordinate - 11;
+            double y2 = yCoordinate + 11;
             return x1 < x && x < x2 && y1 < y && y < y2;
 
 

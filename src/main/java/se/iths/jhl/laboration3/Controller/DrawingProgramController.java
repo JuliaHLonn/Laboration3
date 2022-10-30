@@ -10,6 +10,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import se.iths.jhl.laboration3.Model.MyShapes;
 import se.iths.jhl.laboration3.Model.Rectangle;
 import se.iths.jhl.laboration3.Model.ShapeModel;
 
@@ -63,14 +64,15 @@ public class DrawingProgramController {
     }
 
     public void alterShape(MouseEvent mouseEvent){
-        double xCo = mouseEvent.getX();
-        double yCo = mouseEvent.getY();
-        System.out.println("Is this true? "+ Rectangle.isSelected(xCo,yCo));
-        for (Shape shape:shapeModel.listOfShapeObjects
-        ) {
-            System.out.println(shape.getId());
-            //Rectangle.isSelected(shape.getxCoordinate(), shape.getyCoordinate())
-
+        double xCo1 = mouseEvent.getX();
+        double yCo1 = mouseEvent.getY();
+        System.out.println("Is this true? "+ Rectangle.isSelected(xCo1,yCo1));
+        for (Shape shape:shapeModel.listOfShapeObjects) {
+            double xCo = mouseEvent.getX();
+            double yCo = mouseEvent.getY();
+            if(Rectangle.isSelected(xCo, yCo))
+                System.out.println("Found a match");
+// Får nog sätta den i en till loop så att den inte bara tar sista musklicket
         }
     }
 
