@@ -2,23 +2,26 @@ package se.iths.jhl.laboration3.Model;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
-import java.lang.reflect.Array;
-import java.util.List;
+import java.util.Objects;
 
 public class Rectangle extends Shape {
 
     public double sizeX;
     public double sizeY;
 
-    public static double xCoordinate;
+    public double xCoordinate;
 
-    public static double yCoordinate;
+    public double yCoordinate;
 
     public Color color;
 
-    public int id;
+
+    //public ShapeModel shapeModel = new ShapeModel();
+
+
+
+
 
 
     public Rectangle(Color color, double sizeX, double sizeY, double xCoordinate, double yCoordinate) {
@@ -26,11 +29,13 @@ public class Rectangle extends Shape {
         this.color = color;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
-        Rectangle.xCoordinate = xCoordinate;
-        Rectangle.yCoordinate = yCoordinate;
-        this.setId("rectangle");
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+
 
     }
+
+    public Rectangle(){};
 
   /*  public static void ifClicked(List<Shape> list, MouseEvent mouseEvent) {
         String target = String.valueOf(mouseEvent.getSource());
@@ -54,18 +59,27 @@ public class Rectangle extends Shape {
 
 
     }*/
+  /*public void drawRectangle(MouseEvent mouseEvent) {
+      Color color = DrawingProgramController.colorPicker.getValue();
+      double size = Double.parseDouble(DrawingProgramController.pickSize.getText());
+      shapeModel.createRectangleObject(color, size, size, mouseEvent.getX(), mouseEvent.getY());
+      DrawingProgramController.context.setFill(color);
+      DrawingProgramController.context.fillRect(mouseEvent.getX() - 10, mouseEvent.getY() - 10, size, size);
+  }*/
 
-    public void setSize(double x, double y) {
 
-    }
-
-    public static double getxCoordinate() {
+    public double getXCoordinate() {
         return xCoordinate;
     }
 
-    public static double getyCoordinate() {
+    public double getYCoordinate() {
         return yCoordinate;
     }
+
+    public void changeColor(Color color){
+        this.color = color;
+    }
+
 
     public static double[] getPosition(MouseEvent mouseEvent) {
         double[] position = new double[]{mouseEvent.getX(), mouseEvent.getY()};
@@ -74,27 +88,26 @@ public class Rectangle extends Shape {
 
     }
 
-    public static boolean isSelected(double x, double y) {
-//        boolean bool = false;
-//        double x1 = x - 10;
-//        double x2 = x + 10;
-//        double y1 = x - 10;
-//        double y2 = x + 10;
-//        if (x1 < x && x < x2) {
-//            if (y1 < y && y < y2)
-//                bool = true;
-//        }
-//        return bool;
-       // public static void isSelected(double x, double y) {
+    public boolean isSelected(double x, double y) {
+
             double x1 = xCoordinate - 11;
             double x2 = xCoordinate + 11;
             double y1 = yCoordinate - 11;
             double y2 = yCoordinate + 11;
             return x1 < x && x < x2 && y1 < y && y < y2;
-
-
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rectangle rectangle)) return false;
+        return Double.compare(rectangle.sizeX, sizeX) == 0 && Double.compare(rectangle.sizeY, sizeY) == 0 && color.equals(rectangle.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sizeX, sizeY, color);
+    }
 
 
 }

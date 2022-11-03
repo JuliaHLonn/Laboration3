@@ -26,20 +26,18 @@
                     <ToggleGroup fx:id="toggleShape"/>
                 </fx:define>
                 <ColorPicker fx:id="colorPicker"/>
-                <ChoiceBox fx:id="choiceBox">
-
-                </ChoiceBox>
+                <TextField fx:id="pickSize" text="20"/>
                 <RadioButton fx:id="cirkleButton" text="Draw Cirkle" toggleGroup="$toggleShape"/>
                 <RadioButton fx:id="rectangleButton" text="Draw Rectangle" toggleGroup="$toggleShape"/>
-                <RadioButton fx:id="triangleButton" text="Draw Triangle" toggleGroup="$toggleShape"/>
                 <RadioButton fx:id="selectModeButton" text="Select Shape" toggleGroup="$toggleShape"/>
                 <Button fx:id="undoButton" text="Undo" onMouseClicked="#undoButtonClicked"/>
+                <Button fx:id="saveButton" text="Save" onAction="#onSaveAction" />
             </HBox>
         </ToolBar>
     </top>
     <center>
         <VBox alignment="CENTER" prefHeight="800.0" prefWidth="700.0" style="-fx-background-color: white">
-
+            <Label fx:id="welcomeLabel" text="Welcome to draw! Choose color and size above and create your masterpiece by clicking on the canvas" />
             <Canvas fx:id="canvas" height="800.0" width="700.0" onMouseClicked="#onCanvasClicked"/>
 
 

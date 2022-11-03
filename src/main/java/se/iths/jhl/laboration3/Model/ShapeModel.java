@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +56,9 @@ public class ShapeModel {
     }
 
     public void createRectangleObject(Color color, double x, double y, double xCoordinate, double yCoordinate) {
-        listOfShapeObjects.add(new Rectangle(color, x, y, xCoordinate, yCoordinate));
+        Shape rectangle = new Rectangle(color, x, y, xCoordinate, yCoordinate);
+        listOfShapeObjects.add(rectangle);
+        //return rectangle;
     }
 
     public void createTriangleObject(double[] base, double[] height, Color color) {
@@ -68,4 +70,19 @@ public class ShapeModel {
         return new ArrayList<>();
     }
 
+    public void saveToFile(File file) { // Eventuellt Path file *
+        // Kod för att omvandla en bild antar jag till en fil
+        StringBuffer output = new StringBuffer();
+    /*    <svg version="1.1"
+        width="300" height="200"
+        xmlns="http://www.w3.org/2000/svg">
+
+  <rect width="100%" height="100%" fill="red" />
+
+  <circle cx="150" cy="100" r="80" fill="green" />
+
+  <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">SVG</text>
+
+</svg>*/
+    }
 }

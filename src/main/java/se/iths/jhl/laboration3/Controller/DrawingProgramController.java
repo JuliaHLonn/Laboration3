@@ -1,27 +1,31 @@
 package se.iths.jhl.laboration3.Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import se.iths.jhl.laboration3.Model.MyShapes;
 import se.iths.jhl.laboration3.Model.Rectangle;
+import se.iths.jhl.laboration3.Model.Shape;
 import se.iths.jhl.laboration3.Model.ShapeModel;
 
+import java.io.File;
 import java.lang.reflect.Array;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 
 public class DrawingProgramController {
 
-    public GraphicsContext context;
+    public static GraphicsContext context;
     @FXML
     public Canvas canvas;
 
@@ -33,8 +37,6 @@ public class DrawingProgramController {
     public RadioButton rectangleButton;
 
     @FXML
-    public RadioButton triangleButton;
-    @FXML
     public RadioButton selectModeButton;
     @FXML
     public ColorPicker colorPicker;
@@ -42,61 +44,85 @@ public class DrawingProgramController {
     @FXML
     public Button undoButton;
 
+    @FXML Button saveButton;
+
+    @FXML
+    public TextField pickSize;
+
+    public Stage stage;
+
     public ShapeModel shapeModel = new ShapeModel();
-    //public Rectangle rectangle = new Rectangle();
+    //
+    public Rectangle rectangle = new Rectangle();
 
     public void initialize() {
         context = canvas.getGraphicsContext2D();
 
+
+
     }
+
+    /*@Override
+    public void initialize(URL url, ResourceBundle resourceBundle) { // Todo: Jag lär väl inte behöva två?
+        choiceBox.getItems().addAll(sizes);
+        choiceBox.setOnAction(this::setSize);
+    }*/
 
     @FXML
     public void onCanvasClicked(MouseEvent mouseEvent) {
 
         wichMode(mouseEvent);
 
-        shapeModel.printList();
-        changeColor(mouseEvent);
-        alterShape(mouseEvent);
-    }
-    public void handleMouseEvent(MouseEvent mouseEvent){
-
+       // shapeModel.printList();
+        //changeColor();
+       // alterShape(mouseEvent);
     }
 
-    public void alterShape(MouseEvent mouseEvent){
-        double xCo1 = mouseEvent.getX();
-        double yCo1 = mouseEvent.getY();
-        System.out.println("Is this true? "+ Rectangle.isSelected(xCo1,yCo1));
-        for (Shape shape:shapeModel.listOfShapeObjects) {
+   /* @FXML
+    public void setSize(ActionEvent event) {
+        String chosenSize = choiceBox.getValue();
+        sizeSide = 0;
+
+        if (chosenSize.equals("Small"))
+            sizeSide = 20;
+        else if (chosenSize.equals("Medium"))
+            sizeSide = 40;
+        else if (chosenSize.equals("Large"))
+            sizeSide = 60;
+
+    }*/
+
+
+    public void alterShape(MouseEvent mouseEvent) {
+        for (Shape shape : ShapeModel.listOfShapeObjects) {
             double xCo = mouseEvent.getX();
             double yCo = mouseEvent.getY();
-            if(Rectangle.isSelected(xCo, yCo))
+            if (shape.isSelected(xCo, yCo)) {
                 System.out.println("Found a match");
+                /*double size = Double.parseDouble(pickSize.getText());
+               Rectangle rectangle = new Rectangle(colorPicker.getValue(), size, size, mouseEvent.getX()-10, mouseEvent.getY()-10);
+               context.setFill(colorPicker.getValue());
+               context.fillRect(mouseEvent.getX()-10, mouseEvent.getY() - 10, size, size);*/
+            }
 // Får nog sätta den i en till loop så att den inte bara tar sista musklicket
         }
+        /*for (int i = 0; i < ShapeModel.listOfShapeObjects.size(); i++) {
+            double xCo = mouseEvent.getX();
+            double yCo = mouseEvent.getY();
+
+            if (Rectangle.isSelected(xCo, yCo)) {
+                System.out.println("Found a match");
+                //double x = ShapeModel.listOfShapeObjects.get(i).xCoordinate;
+                ShapeModel.listOfShapeObjects.get(i).changeColor(colorPicker.getValue());
+            }
+        }*/
     }
-
-    public void tina(){
-        for (var shape: ShapeModel.listOfShapeObjects
-             ) {
-//            System.out.println(shape.getId());
-//            if(shape.getId().equals("cirkle")){
-//
-//            }
-//            else if (shape.getId().equals("rectangle")) {
-//
-//            }
-           // Rectangle.isSelected(shape., shape.getyCoordinate())
-
-        }
-    }
-
 
 
     private void wichMode(MouseEvent mouseEvent) {
-        if(cirkleButton.isSelected())
+        if (cirkleButton.isSelected())
             drawCirkle(mouseEvent);
-        else if (rectangleButton.isSelected())
+        else if (rectangleButton.isSelected())                // Är detta en factory metod?
             drawRectangle(mouseEvent);
         else if (selectModeButton.isSelected()) {
             alterShape(mouseEvent);
@@ -104,45 +130,61 @@ public class DrawingProgramController {
     }
 
 
-    @FXML
+   @FXML
     public void drawRectangle(MouseEvent mouseEvent) {
         Color color = colorPicker.getValue();
-        shapeModel.createRectangleObject(color, 20, 20, mouseEvent.getX(), mouseEvent.getY());
-        context.setFill(colorPicker.getValue());
-        context.fillRect(mouseEvent.getX() - 10, mouseEvent.getY() - 10, 20, 20);
+        double size = Double.parseDouble(pickSize.getText());
+        shapeModel.createRectangleObject(color, size, size, mouseEvent.getX(), mouseEvent.getY());
+
+        context.setFill(color);
+        context.fillRect(mouseEvent.getX() - 10, mouseEvent.getY() - 10, size, size);
     }
-@FXML
+
+    @FXML
     public void drawCirkle(MouseEvent mouseEvent) {
         Color color = colorPicker.getValue();
-        shapeModel.createCirkleObject(color, 20);
+        double size = Double.parseDouble(pickSize.getText());
+        shapeModel.createCirkleObject(color, size);
         context.setFill(colorPicker.getValue());
-        context.fillOval(mouseEvent.getX() - 10, mouseEvent.getY() - 10, 20, 20);
+        context.fillOval(mouseEvent.getX() - 10, mouseEvent.getY() - 10, size, size);
     }
 
-    public void drawTriangle(MouseEvent mouseEvent){
+    /*public void changeColor() {
         Color color = colorPicker.getValue();
-        shapeModel.createTriangleObject(new double[]{100,150, 50}, new double[]{100, 150, 150},color);
-        context.setFill(colorPicker.getValue());
-        context.fillPolygon(new double[]{100,150, 50}, new double[]{100, 150, 150}, 15);
-    }
-    public void changeColor(MouseEvent mouseEvent) {
-        Color color = colorPicker.getValue();
-        if(mouseEvent.getSource() == shapeModel.rectangle){
-            System.out.println("This is a rectangle");
-        }
-        System.out.println(mouseEvent.getSource());
 
-    }
 
-    public void undoButtonClicked(){
+    }*/
+
+    public void undoButtonClicked() {
         undoButton.isCancelButton();
+    }
+
+    public void onSaveAction(ActionEvent actionEvent){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save as");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().clear();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+
+        File file = fileChooser.showSaveDialog(stage);
+        if(file!=null)
+        { shapeModel.saveToFile(file); }// Kanske inte shapemodel // Eventuellt file.toPath() * för då använder vi nåt nytt
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     //Todo: Lägg till Undo funktionen
     // Todo: Lägg till funktion för att ändra storlek
     // Todo: Lägg till funktion för att ändra färg
-    // Todo: Hur gör man en triangel??
-    // Todo: Har just extendat Shapemodel på Shape, hoppas det fungerar, kolla det
+
+    //Todo: Klick på canvas - selection mode? altershape
+    //Todo: Overrida rita ut metoden?
+    //Todo: Lägg till en riktig rektangel
+    //Todo:Tredje tillfälligt listobjekt när du ersätter ett objekt i listan
+    //Todo: Vilken cirkel importeras? Shapetype enum?
+    //Todo:
 
 
 }

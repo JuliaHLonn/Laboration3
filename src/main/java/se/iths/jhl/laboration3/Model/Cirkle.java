@@ -1,7 +1,6 @@
 package se.iths.jhl.laboration3.Model;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 public class Cirkle extends Shape {
 
@@ -16,10 +15,17 @@ public class Cirkle extends Shape {
     public Cirkle(Color color, double radius) {
         this.color = color;
         this.radius = radius;
-        this.setId("cirkle");
+
     }
+
+
 
     public void setRadius(double newRadius){
         radius = newRadius;
+    }
+
+    @Override
+    public boolean isSelected(double x, double y) {
+        return false;
     }
 }
