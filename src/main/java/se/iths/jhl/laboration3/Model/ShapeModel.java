@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class ShapeModel {
     public javafx.scene.shape.Rectangle rectangle;
 
     //public Color color;
-    public static List<Shape> listOfShapeObjects = new ArrayList<>();
+
 
 
     public ShapeModel() {
@@ -26,7 +29,7 @@ public class ShapeModel {
 
     // public ShapeModel(Color color){this.color = color;}
     public void printList() {
-        for (var shape : listOfShapeObjects
+        for (var shape : Shape.listOfShapeObjects
         ) {
             System.out.println(shape);
 
@@ -51,28 +54,47 @@ public class ShapeModel {
         return super.toString();
     }
 
-    public void createCirkleObject(Color color, double radius) {
-        listOfShapeObjects.add(new Cirkle(color, radius));
-    }
 
-    public void createRectangleObject(Color color, double x, double y, double xCoordinate, double yCoordinate) {
-        Shape rectangle = new Rectangle(color, x, y, xCoordinate, yCoordinate);
-        listOfShapeObjects.add(rectangle);
-        //return rectangle;
-    }
+
+
 
     public void createTriangleObject(double[] base, double[] height, Color color) {
         //  listOfShapeObjects.add(new Triangle(base,height, color));
     }
 
 
-    public static List<ShapeModel> createListOfShapeObjects() {
-        return new ArrayList<>();
-    }
 
-    public void saveToFile(File file) { // Eventuellt Path file *
+
+    public void saveToFile(Path path) { // Eventuellt Path file *
         // Kod för att omvandla en bild antar jag till en fil
-        StringBuffer output = new StringBuffer();
+        StringBuffer stringBuffer = new StringBuffer();
+        List<String> svgList = new ArrayList<>();
+        String startSVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"700\" height=\"800\">";
+        svgList.add(startSVG);
+
+        for (Shape shape : Shape.listOfShapeObjects) {
+            svgList.add(shape.svgString());
+
+
+           /* outPut.append(p.getProductName());
+            outPut.append(",");
+            outPut.append(p.getEanCode());
+            outPut.append(",");
+            outPut.append(p.getPrice());
+            outPut.append(",");
+            outPut.append(p.getCategory().getCategoryName());
+            outPut.append("\n");*/
+        }
+        svgList.add("</svg>");
+        try {
+            Files.writeString(path, svgList.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for (String string:svgList
+             ) {
+            System.out.println(string);
+        }
     /*    <svg version="1.1"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">

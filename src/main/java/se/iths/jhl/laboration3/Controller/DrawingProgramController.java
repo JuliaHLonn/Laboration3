@@ -10,10 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import se.iths.jhl.laboration3.Model.MyShapes;
-import se.iths.jhl.laboration3.Model.Rectangle;
-import se.iths.jhl.laboration3.Model.Shape;
-import se.iths.jhl.laboration3.Model.ShapeModel;
+import se.iths.jhl.laboration3.Model.*;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -44,7 +41,8 @@ public class DrawingProgramController {
     @FXML
     public Button undoButton;
 
-    @FXML Button saveButton;
+    @FXML
+    Button saveButton;
 
     @FXML
     public TextField pickSize;
@@ -52,31 +50,41 @@ public class DrawingProgramController {
     public Stage stage;
 
     public ShapeModel shapeModel = new ShapeModel();
-    //
-    public Rectangle rectangle = new Rectangle();
+    String name = "shape";
+    int number = 0;
 
     public void initialize() {
         context = canvas.getGraphicsContext2D();
-
+        rectangleButton.setSelected(true);
 
 
     }
-
-    /*@Override
-    public void initialize(URL url, ResourceBundle resourceBundle) { // Todo: Jag lär väl inte behöva två?
-        choiceBox.getItems().addAll(sizes);
-        choiceBox.setOnAction(this::setSize);
-    }*/
 
     @FXML
     public void onCanvasClicked(MouseEvent mouseEvent) {
 
-        wichMode(mouseEvent);
+        if (selectModeButton.isSelected()) {
+            Shape.alterShape(mouseEvent, colorPicker.getValue());
+            Shape.listOfShapeObjects.add(wichMode(mouseEvent));
+            context.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
+            for (Shape shape : Shape.listOfShapeObjects) {
+                shape.drawShape(context);
+            }
+        }
+        else {
+            Shape.listOfShapeObjects.add(wichMode(mouseEvent));
+            for (Shape shape : Shape.listOfShapeObjects) {
+                shape.drawShape(context);
+            }
 
-       // shapeModel.printList();
+
+        }
+
+        //shapeModel.printList();
         //changeColor();
-       // alterShape(mouseEvent);
+        // alterShape(mouseEvent);
     }
+
 
    /* @FXML
     public void setSize(ActionEvent event) {
@@ -93,19 +101,19 @@ public class DrawingProgramController {
     }*/
 
 
-    public void alterShape(MouseEvent mouseEvent) {
-        for (Shape shape : ShapeModel.listOfShapeObjects) {
+   /* public void alterShape(MouseEvent mouseEvent) {
+        for (Shape shape : Shape.listOfShapeObjects) {
             double xCo = mouseEvent.getX();
             double yCo = mouseEvent.getY();
             if (shape.isSelected(xCo, yCo)) {
-                System.out.println("Found a match");
+                System.out.println("Found a match");*/
                 /*double size = Double.parseDouble(pickSize.getText());
                Rectangle rectangle = new Rectangle(colorPicker.getValue(), size, size, mouseEvent.getX()-10, mouseEvent.getY()-10);
                context.setFill(colorPicker.getValue());
                context.fillRect(mouseEvent.getX()-10, mouseEvent.getY() - 10, size, size);*/
-            }
+    // }
 // Får nog sätta den i en till loop så att den inte bara tar sista musklicket
-        }
+    //}
         /*for (int i = 0; i < ShapeModel.listOfShapeObjects.size(); i++) {
             double xCo = mouseEvent.getX();
             double yCo = mouseEvent.getY();
@@ -116,25 +124,28 @@ public class DrawingProgramController {
                 ShapeModel.listOfShapeObjects.get(i).changeColor(colorPicker.getValue());
             }
         }*/
-    }
+    // }
 
 
-    private void wichMode(MouseEvent mouseEvent) {
+    private Shape wichMode(MouseEvent mouseEvent) {
+        String nameOf = shapeName(name);
         if (cirkleButton.isSelected())
-            drawCirkle(mouseEvent);
-        else if (rectangleButton.isSelected())                // Är detta en factory metod?
-            drawRectangle(mouseEvent);
-        else if (selectModeButton.isSelected()) {
-            alterShape(mouseEvent);
-        }
+            return Shape.createCirkle(colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
+        else
+            return Shape.createRectangle(colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
+    }
+
+    public String shapeName(String name){
+        number = number +1;
+        return name+number;
     }
 
 
-   @FXML
-    public void drawRectangle(MouseEvent mouseEvent) {
+  /* @FXML
+    public void drawShape(GraphicsContext context) {
         Color color = colorPicker.getValue();
         double size = Double.parseDouble(pickSize.getText());
-        shapeModel.createRectangleObject(color, size, size, mouseEvent.getX(), mouseEvent.getY());
+        shapeModel.createRectangleObject(color, mouseEvent.getX(), mouseEvent.getY());
 
         context.setFill(color);
         context.fillRect(mouseEvent.getX() - 10, mouseEvent.getY() - 10, size, size);
@@ -147,7 +158,7 @@ public class DrawingProgramController {
         shapeModel.createCirkleObject(color, size);
         context.setFill(colorPicker.getValue());
         context.fillOval(mouseEvent.getX() - 10, mouseEvent.getY() - 10, size, size);
-    }
+    }*/
 
     /*public void changeColor() {
         Color color = colorPicker.getValue();
@@ -159,16 +170,21 @@ public class DrawingProgramController {
         undoButton.isCancelButton();
     }
 
-    public void onSaveAction(ActionEvent actionEvent){
+    public void onSaveAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.getExtensionFilters().clear();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SVG", "*.svg"));
+        fileChooser.setInitialFileName("yourShapes");
+        //File file = fileChooser.showSaveDialog(stage);
+        File filePath = fileChooser.showSaveDialog(stage);
 
-        File file = fileChooser.showSaveDialog(stage);
-        if(file!=null)
-        { shapeModel.saveToFile(file); }// Kanske inte shapemodel // Eventuellt file.toPath() * för då använder vi nåt nytt
+        if (filePath != null) { // file istället för filepath
+           // shapeModel.saveToFile(file);
+            //java.nio.file.Path path = java.nio.file.Path.of(filePath.toURI());
+            shapeModel.saveToFile(filePath.toPath());
+        }// Kanske inte shapemodel // Eventuellt file.toPath() * för då använder vi nåt nytt
     }
 
     public void setStage(Stage stage) {
