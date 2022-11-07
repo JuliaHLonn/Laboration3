@@ -49,11 +49,13 @@ public class DrawingProgramController {
     @FXML
     public TextField pickSize;
 
+
     public Stage stage;
 
     public ShapeModel shapeModel = new ShapeModel();
     String name = "shape";
     int number = 0;
+
 
     public void initialize() {
         context = canvas.getGraphicsContext2D();
@@ -64,9 +66,9 @@ public class DrawingProgramController {
 
     @FXML
     public void onCanvasClicked(MouseEvent mouseEvent) {
-
+        double size = Double.parseDouble(pickSize.getText());
         if (selectModeButton.isSelected()) {
-            Shape.alterShape(mouseEvent, colorPicker.getValue());
+            Shape.alterShape(size, mouseEvent, colorPicker.getValue());
             return;
         }
 
@@ -74,8 +76,21 @@ public class DrawingProgramController {
 
     }
 
+    @FXML
+    public void undoButtonClicked(ActionEvent event) {
+        System.out.println(Shape.listOfShapeObjects.size());
+        Shape.listOfShapeObjects.remove(Shape.listOfShapeObjects.size() -1);
+        System.out.println(Shape.listOfShapeObjects.size());
+        //context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//        for (Shape shape: Shape.listOfShapeObjects
+//             ) { shape.drawShape(context);
+//
+//        }
+    }
+
     private void listChanged(Observable observable) {
         var context = canvas.getGraphicsContext2D();
+        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (Shape shape : Shape.getShapes()) {
             shape.drawShape(context);
         }
@@ -124,11 +139,11 @@ public class DrawingProgramController {
 
 
     private Shape wichMode(MouseEvent mouseEvent) {
-        String nameOf = shapeName(name);
+        double size = Double.parseDouble(pickSize.getText());
         if (cirkleButton.isSelected())
-            return Shape.createCirkle(colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
+            return Shape.createCirkle(size, colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
         else
-            return Shape.createRectangle(colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
+            return Shape.createRectangle(size, colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
     }
 
     public String shapeName(String name){
@@ -162,9 +177,6 @@ public class DrawingProgramController {
 
     }*/
 
-    public void undoButtonClicked() {
-        undoButton.isCancelButton();
-    }
 
     public void onSaveAction(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();

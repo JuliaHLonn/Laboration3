@@ -6,23 +6,23 @@ import javafx.scene.paint.Color;
 public class Square extends Shape {
 
 
-    public Square(Color color, double xCoordinate, double yCoordinate) {
-        super(color, xCoordinate, yCoordinate);
+    public Square(double size, Color color, double xCoordinate, double yCoordinate) {
+        super(size, color, xCoordinate, yCoordinate);
 
     }
 
     @Override
     public void drawShape(GraphicsContext context) {
         context.setFill(getColor());
-        context.fillRect(xCoordinate - (width / 2), yCoordinate - (height / 2), width, height);
+        context.fillRect(xCoordinate - (getWidth()/ 2), yCoordinate - (getHeight()/ 2), getWidth(), getHeight());
     }
-
+@Override
     public boolean isSelected(double x, double y) {
 
-        double x1 = xCoordinate - width/2;
-        double x2 = xCoordinate + width/2;
-        double y1 = yCoordinate - height/2;
-        double y2 = yCoordinate + height/2;
+        double x1 = xCoordinate - getWidth()/ 2;
+        double x2 = xCoordinate + getWidth()/ 2;
+        double y1 = yCoordinate - getHeight()/ 2;
+        double y2 = yCoordinate + getHeight()/ 2;
         return x1 < x && x < x2 && y1 < y && y < y2;
 
     }

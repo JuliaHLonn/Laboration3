@@ -14,13 +14,15 @@ import java.util.*;
 
 public abstract class Shape {
 
-    public int width, height;
+    //public double width, height;
     public double xCoordinate, yCoordinate;
 
 public ObjectProperty<Color> color = new SimpleObjectProperty<>();
+public ObjectProperty<Double> width = new SimpleObjectProperty<>();
+public ObjectProperty<Double> height = new SimpleObjectProperty<>();
     //public Color color;
 
-    public static ObservableList<Shape> listOfShapeObjects = FXCollections.observableArrayList(param -> new Observable[]{param.colorProperty() });
+    public static ObservableList<Shape> listOfShapeObjects = FXCollections.observableArrayList(param -> new Observable[]{param.colorProperty(), param.heightProperty(), param.widthProperty() });
     //public static List<Shape> listOfShapeObjects = new ArrayList<>();
     public static ObservableList<? extends Shape> getShapes() {
         return listOfShapeObjects;
@@ -28,11 +30,13 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
 
     static Deque<Command> undoStack = new ArrayDeque<>();
 
-    public Shape(Color newColor, double xCoordinate, double yCoordinate) {
+    public Shape(double size, Color newColor, double xCoordinate, double yCoordinate) {
 
         color.set(newColor);
-        this.width = 30;
-        this.height = 30;
+       // this.width = size;
+        //this.height = size;
+        width.set(size);
+        height.set(size);
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
 
@@ -42,32 +46,39 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
         this.color.set(color);
     }
 
-    public int getWidth() {
-        return width;
+    public void setWidth(Double width) {
+        this.width.set(width);
     }
 
-    public int getHeight() {
-        return height;
+    public void setHeight(Double height) {
+        this.height.set(height);
+    }
+
+    public double getWidth() {
+        return width.get();
+    }
+
+    public double getHeight() {
+        return height.get();
     }
 
     public ObjectProperty<Color> colorProperty() {
         return color;
     }
+    public ObjectProperty<Double> widthProperty() {return width;}
+    public ObjectProperty<Double> heightProperty() {return height;}
 
-    public void changeSize(int newWidth, int newHeight){
-        if(width == 30 && height == 30)
-            setSize(50, 50);
-        else if (width == 50 && height == 50) {
-            setSize(65, 65);
-        } else if (width ==65 && height == 65) {
-            setSize(30,30);
-        }
-    }
 
-    public void setSize(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
+//    public void changeSize(){
+//        if(width == 30 && height == 30)
+//            setSize(50, 50);
+//        else if (width == 50 && height == 50) {
+//            setSize(65, 65);
+//        } else if (width ==65 && height == 65) {
+//            setSize(30,30);
+//        }
+//    }
+
 
     public double getXCoordinate() {
         return xCoordinate;
@@ -81,12 +92,13 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
         return color.get();
     }
 
-    public static Shape createCirkle(Color color, double x, double y) {
-        return new Cirkle(color, x, y);
+    public static Shape createCirkle(double size, Color color, double x, double y) {
+
+        return new Cirkle(size,color, x, y);
     }
 
-    public static Shape createRectangle(Color color, double x, double y) {
-        return new Square(color, x, y);
+    public static Shape createRectangle(double size, Color color, double x, double y) {
+        return new Square(size,color, x, y);
 
     }
 
@@ -94,14 +106,16 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
 
     public abstract boolean isSelected(double x, double y);
 
-    public static void alterShape(MouseEvent mouseEvent, Color color) {
+    public static void alterShape(Double size, MouseEvent mouseEvent, Color color) {
         for (Shape shape : listOfShapeObjects) {
             double xCo = mouseEvent.getX();
             double yCo = mouseEvent.getY();
             if (shape.isSelected(xCo, yCo)) {
                 System.out.println("Found a match");
                 shape.setColor(color);
-                System.out.println(shape.getColor());
+                shape.setWidth(size);
+                shape.setHeight(size);
+
             }
         }
     }
@@ -109,10 +123,8 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
     public abstract String svgString();
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Square square)) return false;
-        return Double.compare(square.width, width) == 0 && Double.compare(square.height, height) == 0 && color.equals(square.color);
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
     @Override

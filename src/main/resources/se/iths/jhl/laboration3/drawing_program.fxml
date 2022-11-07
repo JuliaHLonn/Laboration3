@@ -30,7 +30,7 @@
                 <RadioButton fx:id="cirkleButton" text="Draw Cirkle" toggleGroup="$toggleShape"/>
                 <RadioButton fx:id="rectangleButton" text="Draw Rectangle" toggleGroup="$toggleShape"/>
                 <RadioButton fx:id="selectModeButton" text="Select Shape" toggleGroup="$toggleShape"/>
-                <Button fx:id="undoButton" text="Undo" onMouseClicked="#undoButtonClicked"/>
+                <Button fx:id="undoButton" text="Undo" onAction="#undoButtonClicked"/>
                 <Button fx:id="saveButton" text="Save" onAction="#onSaveAction" />
             </HBox>
         </ToolBar>

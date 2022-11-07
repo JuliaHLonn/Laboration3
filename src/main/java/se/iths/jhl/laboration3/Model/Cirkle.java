@@ -10,8 +10,8 @@ public class Cirkle extends Shape {
 
 
 
-    public Cirkle(Color color, double xCoordinate, double yCoordinate) {
-        super(color,xCoordinate,yCoordinate);
+    public Cirkle(double size, Color color, double xCoordinate, double yCoordinate) {
+        super(size,color,xCoordinate,yCoordinate);
 
 
 
@@ -21,28 +21,17 @@ public class Cirkle extends Shape {
     @Override
     public void drawShape(GraphicsContext context) {
         context.setFill(getColor());
-        context.fillOval(xCoordinate-(width/2), yCoordinate-(height/2), width, height);
+        context.fillOval(xCoordinate-(getWidth()/2), yCoordinate-(getHeight()/ 2), getWidth(), getHeight());
     }
 
 
     @Override
     public boolean isSelected(double x, double y) {
-//        double xRadius = width/2;
-//        double yRadius = height/2;
-//        double xCo =  xCoordinate+ xRadius;
-//        double yCo = yCoordinate + yRadius;
-//        return ( (yRadius*(x-xCo))*(yRadius*(x-xCo)) + (xRadius*(y-yCo))*(xRadius*(y-yCo)) <= xRadius*xRadius*yRadius*yRadius );
-//        double xRadius = width/2;
-//        double yRadius = height/2;
-//        double xCo =  xCoordinate+ xRadius;
-//        double yCo = yCoordinate + yRadius;
-//        return ( (yRadius*(x-xCo))*(yRadius*(x-xCo)) + (xRadius*(y-yCo))*(xRadius*(y-yCo)) <= xRadius*xRadius*yRadius*yRadius );
-        double areaX = x - getWidth();
-        double areaY = y - getHeight();
+
+        double areaX = getWidth() - x;
+        double areaY = getHeight() - y;
         double distance = Math.sqrt((areaX * areaX) + (areaY * areaY));
         return distance <= getWidth()/2;
-
-
 
     }
 
