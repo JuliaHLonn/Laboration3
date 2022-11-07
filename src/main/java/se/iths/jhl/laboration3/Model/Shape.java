@@ -22,6 +22,9 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
 
     public static ObservableList<Shape> listOfShapeObjects = FXCollections.observableArrayList(param -> new Observable[]{param.colorProperty() });
     //public static List<Shape> listOfShapeObjects = new ArrayList<>();
+    public static ObservableList<? extends Shape> getShapes() {
+        return listOfShapeObjects;
+    }
 
     static Deque<Command> undoStack = new ArrayDeque<>();
 
@@ -29,7 +32,7 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
 
         color.set(newColor);
         this.width = 30;
-        this.height = 20;
+        this.height = 30;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
 
@@ -51,7 +54,15 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
         return color;
     }
 
-    ;
+    public void changeSize(int newWidth, int newHeight){
+        if(width == 30 && height == 30)
+            setSize(50, 50);
+        else if (width == 50 && height == 50) {
+            setSize(65, 65);
+        } else if (width ==65 && height == 65) {
+            setSize(30,30);
+        }
+    }
 
     public void setSize(int width, int height) {
         this.width = width;
@@ -75,7 +86,7 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
     }
 
     public static Shape createRectangle(Color color, double x, double y) {
-        return new Rectangle(color, x, y);
+        return new Square(color, x, y);
 
     }
 
@@ -87,7 +98,7 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
         for (Shape shape : listOfShapeObjects) {
             double xCo = mouseEvent.getX();
             double yCo = mouseEvent.getY();
-            if (shape.isSelected(xCo, yCo) || shape.isSelected(xCo, yCo)) {
+            if (shape.isSelected(xCo, yCo)) {
                 System.out.println("Found a match");
                 shape.setColor(color);
                 System.out.println(shape.getColor());
@@ -100,8 +111,8 @@ public ObjectProperty<Color> color = new SimpleObjectProperty<>();
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Rectangle rectangle)) return false;
-        return Double.compare(rectangle.width, width) == 0 && Double.compare(rectangle.height, height) == 0 && color.equals(rectangle.color);
+        if (!(o instanceof Square square)) return false;
+        return Double.compare(square.width, width) == 0 && Double.compare(square.height, height) == 0 && color.equals(square.color);
     }
 
     @Override

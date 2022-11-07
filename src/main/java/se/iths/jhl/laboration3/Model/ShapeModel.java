@@ -87,7 +87,7 @@ public class ShapeModel {
         }
         svgList.add("</svg>");
         try {
-            Files.writeString(path, svgList.toString());
+            Files.write(path, svgList);//writeString, toString()
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

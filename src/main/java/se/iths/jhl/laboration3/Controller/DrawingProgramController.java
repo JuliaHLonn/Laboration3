@@ -1,5 +1,6 @@
 package se.iths.jhl.laboration3.Controller;
 
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import se.iths.jhl.laboration3.Model.*;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -56,7 +58,7 @@ public class DrawingProgramController {
     public void initialize() {
         context = canvas.getGraphicsContext2D();
         rectangleButton.setSelected(true);
-
+        Shape.getShapes().addListener(this::listChanged);
 
     }
 
@@ -65,24 +67,18 @@ public class DrawingProgramController {
 
         if (selectModeButton.isSelected()) {
             Shape.alterShape(mouseEvent, colorPicker.getValue());
-            Shape.listOfShapeObjects.add(wichMode(mouseEvent));
-            context.clearRect(0,0,canvas.getWidth(),canvas.getHeight());
-            for (Shape shape : Shape.listOfShapeObjects) {
-                shape.drawShape(context);
-            }
-        }
-        else {
-            Shape.listOfShapeObjects.add(wichMode(mouseEvent));
-            for (Shape shape : Shape.listOfShapeObjects) {
-                shape.drawShape(context);
-            }
-
-
+            return;
         }
 
-        //shapeModel.printList();
-        //changeColor();
-        // alterShape(mouseEvent);
+            Shape.listOfShapeObjects.add(wichMode(mouseEvent));
+
+    }
+
+    private void listChanged(Observable observable) {
+        var context = canvas.getGraphicsContext2D();
+        for (Shape shape : Shape.getShapes()) {
+            shape.drawShape(context);
+        }
     }
 
 
@@ -179,6 +175,7 @@ public class DrawingProgramController {
         fileChooser.setInitialFileName("yourShapes");
         //File file = fileChooser.showSaveDialog(stage);
         File filePath = fileChooser.showSaveDialog(stage);
+        //Path filePath = Path.of(fileChooser.showSaveDialog(new Stage()).getPath());
 
         if (filePath != null) { // file istället för filepath
            // shapeModel.saveToFile(file);
