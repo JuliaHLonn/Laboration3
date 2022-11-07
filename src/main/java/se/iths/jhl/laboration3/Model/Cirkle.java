@@ -28,10 +28,15 @@ public class Cirkle extends Shape {
     @Override
     public boolean isSelected(double x, double y) {
 
-        double areaX = getWidth() - x;
-        double areaY = getHeight() - y;
-        double distance = Math.sqrt((areaX * areaX) + (areaY * areaY));
-        return distance <= getWidth()/2;
+        double rx = getWidth()/2;   // horizontal radius of ellipse
+        double ry = getHeight()/2;  // vertical radius of ellipse
+        double cx = xCoordinate-(getWidth()/2) + rx;   // x-coord of center of ellipse
+        double cy = yCoordinate-(getHeight()/2) + ry;    // y-coord of center of ellipse
+        if ( (ry*(x-cx))*(ry*(x-cx)) + (rx*(y-cy))*(rx*(y-cy)) <= rx*rx*ry*ry )
+            return true;
+        else
+            return false;
+
 
     }
 
