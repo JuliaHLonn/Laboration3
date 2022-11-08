@@ -23,7 +23,6 @@ public abstract class Shape {
 
     public static ObservableList<Shape> listOfShapeObjects = FXCollections.observableArrayList(param -> new Observable[]{param.colorProperty(), param.heightProperty(), param.widthProperty()});
 
-    //public static List<Shape> listOfShapeObjects = new ArrayList<>();
     public static ObservableList<? extends Shape> getShapes() {
         return listOfShapeObjects;
     }
@@ -115,8 +114,8 @@ public abstract class Shape {
     }
 
     private static void changeSize(Double size, Shape shape) {
-        Double oldWidth = shape.getWidth();
-        Double oldHeight = shape.getHeight();
+        double oldWidth = shape.getWidth();
+        double oldHeight = shape.getHeight();
         shape.setWidth(size);
         shape.setHeight(size);
         Command undo1 = ()-> shape.setSize(oldWidth, oldHeight);
@@ -134,11 +133,6 @@ public abstract class Shape {
         undoStack.push(undo);
     }
 
-//    MutableItem message3 = items.get(1);
-//    String oldTextValue = message3.getText();
-//        message3.setText("Welcome");
-//    Command undo3 = () -> message3.setText(oldTextValue);
-//        undoStack.push(undo3);
 
     public abstract String svgString();
 

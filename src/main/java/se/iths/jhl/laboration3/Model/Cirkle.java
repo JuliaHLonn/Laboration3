@@ -32,10 +32,7 @@ public class Cirkle extends Shape {
         double ry = getHeight()/2;
         double cx = xCoordinate-(getWidth()/2) + rx;
         double cy = yCoordinate-(getHeight()/2) + ry;
-        if ( (ry*(x-cx))*(ry*(x-cx)) + (rx*(y-cy))*(rx*(y-cy)) <= rx*rx*ry*ry )
-            return true;
-        else
-            return false;
+        return (ry * (x - cx)) * (ry * (x - cx)) + (rx * (y - cy)) * (rx * (y - cy)) <= rx * rx * ry * ry;
 
 
     }

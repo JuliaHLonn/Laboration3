@@ -30,7 +30,6 @@ public class SaveSVG {
 
     public void saveToFile(Path path) {
 
-        StringBuffer stringBuffer = new StringBuffer();
         List<String> svgList = new ArrayList<>();
         String startSVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"700\" height=\"800\">";
         svgList.add(startSVG);

@@ -1,7 +1,6 @@
 package se.iths.jhl.laboration3.Controller;
 
 import javafx.beans.Observable;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -76,7 +75,7 @@ public class DrawingProgramController {
     }
 
     @FXML
-    public void undoButtonClicked(ActionEvent event) {
+    public void undoButtonClicked() {
         undoToExecute = Shape.undoStack.pop();
         undoToExecute.execute();
 
@@ -99,7 +98,7 @@ public class DrawingProgramController {
     }
 
 
-    public void onSaveAction(ActionEvent actionEvent) {
+    public void onSaveAction() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
