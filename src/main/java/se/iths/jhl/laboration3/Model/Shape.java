@@ -14,27 +14,25 @@ import java.util.*;
 
 public abstract class Shape {
 
-    //public double width, height;
     public double xCoordinate, yCoordinate;
 
-public ObjectProperty<Color> color = new SimpleObjectProperty<>();
-public ObjectProperty<Double> width = new SimpleObjectProperty<>();
-public ObjectProperty<Double> height = new SimpleObjectProperty<>();
-    //public Color color;
+    public ObjectProperty<Color> color = new SimpleObjectProperty<>();
+    public ObjectProperty<Double> width = new SimpleObjectProperty<>();
+    public ObjectProperty<Double> height = new SimpleObjectProperty<>();
 
-    public static ObservableList<Shape> listOfShapeObjects = FXCollections.observableArrayList(param -> new Observable[]{param.colorProperty(), param.heightProperty(), param.widthProperty() });
+
+    public static ObservableList<Shape> listOfShapeObjects = FXCollections.observableArrayList(param -> new Observable[]{param.colorProperty(), param.heightProperty(), param.widthProperty()});
+
     //public static List<Shape> listOfShapeObjects = new ArrayList<>();
     public static ObservableList<? extends Shape> getShapes() {
         return listOfShapeObjects;
     }
 
-    static Deque<Command> undoStack = new ArrayDeque<>();
+    public static Deque<Command> undoStack = new ArrayDeque<>();
 
     public Shape(double size, Color newColor, double xCoordinate, double yCoordinate) {
 
         color.set(newColor);
-       // this.width = size;
-        //this.height = size;
         width.set(size);
         height.set(size);
         this.xCoordinate = xCoordinate;
@@ -65,20 +63,14 @@ public ObjectProperty<Double> height = new SimpleObjectProperty<>();
     public ObjectProperty<Color> colorProperty() {
         return color;
     }
-    public ObjectProperty<Double> widthProperty() {return width;}
-    public ObjectProperty<Double> heightProperty() {return height;}
 
+    public ObjectProperty<Double> widthProperty() {
+        return width;
+    }
 
-//    public void changeSize(){
-//        if(width == 30 && height == 30)
-//            setSize(50, 50);
-//        else if (width == 50 && height == 50) {
-//            setSize(65, 65);
-//        } else if (width ==65 && height == 65) {
-//            setSize(30,30);
-//        }
-//    }
-
+    public ObjectProperty<Double> heightProperty() {
+        return height;
+    }
 
     public double getXCoordinate() {
         return xCoordinate;
@@ -94,12 +86,16 @@ public ObjectProperty<Double> height = new SimpleObjectProperty<>();
 
     public static Shape createCirkle(double size, Color color, double x, double y) {
 
-        return new Cirkle(size,color, x, y);
+        return new Cirkle(size, color, x, y);
     }
 
     public static Shape createRectangle(double size, Color color, double x, double y) {
-        return new Square(size,color, x, y);
+        return new Square(size, color, x, y);
 
+    }
+    public void setSize(double width, double height){
+        setWidth(width);
+        setHeight(height);
     }
 
     public abstract void drawShape(GraphicsContext context);
@@ -111,14 +107,38 @@ public ObjectProperty<Double> height = new SimpleObjectProperty<>();
             double xCo = mouseEvent.getX();
             double yCo = mouseEvent.getY();
             if (shape.isSelected(xCo, yCo)) {
-                System.out.println("Found a match");
-                shape.setColor(color);
-                shape.setWidth(size);
-                shape.setHeight(size);
+                changeColor(color, shape);
+                changeSize(size, shape);
 
             }
         }
     }
+
+    private static void changeSize(Double size, Shape shape) {
+        Double oldWidth = shape.getWidth();
+        Double oldHeight = shape.getHeight();
+        shape.setWidth(size);
+        shape.setHeight(size);
+        Command undo1 = ()-> shape.setSize(oldWidth, oldHeight);
+        undoStack.push(undo1);
+    }
+
+    private static void changeColor(Color color, Shape shape) {
+        Color oldColor = shape.getColor();
+        shape.setColor(color);
+        pushColorToUndoStack(shape, oldColor);
+    }
+
+    private static void pushColorToUndoStack(Shape shape, Color oldColor) {
+        Command undo = () -> shape.setColor(oldColor);
+        undoStack.push(undo);
+    }
+
+//    MutableItem message3 = items.get(1);
+//    String oldTextValue = message3.getText();
+//        message3.setText("Welcome");
+//    Command undo3 = () -> message3.setText(oldTextValue);
+//        undoStack.push(undo3);
 
     public abstract String svgString();
 
