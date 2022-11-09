@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="se.iths.jhl.laboration3.Controller.DrawingProgramController">
@@ -37,7 +35,7 @@
     </top>
     <center>
         <VBox alignment="CENTER" prefHeight="800.0" prefWidth="700.0" style="-fx-background-color: white">
-            <Label fx:id="welcomeLabel" text="Welcome to draw! Choose color and size above and create your masterpiece by clicking on the canvas" />
+            <Label fx:id="welcomeLabel" style="-fx-font-weight: bold" />
             <Canvas fx:id="canvas" height="800.0" width="700.0" onMouseClicked="#onCanvasClicked"/>
 
 

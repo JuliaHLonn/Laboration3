@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import se.iths.jhl.laboration3.Command;
 import se.iths.jhl.laboration3.Model.*;
 
 import java.io.File;
@@ -19,6 +20,9 @@ public class DrawingProgramController {
     public static GraphicsContext context;
     @FXML
     public Canvas canvas;
+
+    @FXML
+    Label welcomeLabel;
 
     @FXML
     public RadioButton cirkleButton;
@@ -53,6 +57,7 @@ public class DrawingProgramController {
         context = canvas.getGraphicsContext2D();
         rectangleButton.setSelected(true);
         Shape.getShapes().addListener(this::listChanged);
+        setWelcomeLabel();
 
     }
 
@@ -64,8 +69,8 @@ public class DrawingProgramController {
             return;
         }
 
-        Shape.listOfShapeObjects.add(wichMode(mouseEvent));
-        pushAddToUndoStack();
+            Shape.listOfShapeObjects.add(wichMode(mouseEvent));
+            pushAddToUndoStack();
 
     }
 
@@ -95,6 +100,11 @@ public class DrawingProgramController {
             return Shape.createCirkle(size, colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
         else
             return Shape.createRectangle(size, colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
+    }
+
+    public void setWelcomeLabel(){
+        welcomeLabel.setText("Welcome to draw! Choose color and size above and create your masterpiece by clicking on the canvas");
+
     }
 
 

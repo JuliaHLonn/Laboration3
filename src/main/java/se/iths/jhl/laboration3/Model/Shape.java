@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import se.iths.jhl.laboration3.Command;
 
 import java.util.*;
 
@@ -106,9 +107,10 @@ public abstract class Shape {
             double xCo = mouseEvent.getX();
             double yCo = mouseEvent.getY();
             if (shape.isSelected(xCo, yCo)) {
-                changeColor(color, shape);
                 changeSize(size, shape);
+                changeColor(color, shape);
 
+// Det tar två klick att undo en färgändring, kanske den räknar med en storleksändring också liksom?
             }
         }
     }
@@ -118,6 +120,8 @@ public abstract class Shape {
         double oldHeight = shape.getHeight();
         shape.setWidth(size);
         shape.setHeight(size);
+        if(shape.getWidth() == oldWidth && shape.getHeight() == oldHeight)
+            return;
         Command undo1 = ()-> shape.setSize(oldWidth, oldHeight);
         undoStack.push(undo1);
     }
@@ -129,8 +133,8 @@ public abstract class Shape {
     }
 
     private static void pushColorToUndoStack(Shape shape, Color oldColor) {
-        Command undo = () -> shape.setColor(oldColor);
-        undoStack.push(undo);
+        Command undo2 = () -> shape.setColor(oldColor);
+        undoStack.push(undo2);
     }
 
 

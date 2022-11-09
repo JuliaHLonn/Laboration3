@@ -44,10 +44,6 @@ public class SaveSVG {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        for (String string:svgList
-             ) {
-            System.out.println(string);
-        }
 
     }
 }
