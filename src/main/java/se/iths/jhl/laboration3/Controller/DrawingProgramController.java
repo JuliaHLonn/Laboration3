@@ -58,7 +58,6 @@ public class DrawingProgramController {
         rectangleButton.setSelected(true);
         Shape.getShapes().addListener(this::listChanged);
         setWelcomeLabel();
-
     }
 
     @FXML

@@ -8,34 +8,27 @@
 <BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="se.iths.jhl.laboration3.Controller.DrawingProgramController">
     <top>
-        <VBox>
-            <MenuBar>
-                <Menu text="File">
-                    <MenuItem text="Undo"/>
-                    <MenuItem text="Save"/>
-                </Menu>
-
-            </MenuBar>
-        </VBox>
-        <Label text="Draw shapes!"/>
-        <ToolBar>
+        <Label text="Draw shapes!" />
+        <ToolBar style="-fx-background-color: #FFDEB4">
             <HBox alignment="CENTER" spacing="5">
                 <fx:define>
                     <ToggleGroup fx:id="toggleShape"/>
                 </fx:define>
-                <ColorPicker fx:id="colorPicker"/>
-                <TextField fx:id="pickSize" text="20"/>
+                <Label text="Color "/>
+                <ColorPicker fx:id="colorPicker" style="-fx-background-color: white; -fx-border-color: #AAAAAA"/>
+                <Label text="Size "/>
+                <TextField fx:id="pickSize" text="20" style="-fx-border-color: #AAAAAA" />
                 <RadioButton fx:id="cirkleButton" text="Draw Cirkle" toggleGroup="$toggleShape"/>
                 <RadioButton fx:id="rectangleButton" text="Draw Rectangle" toggleGroup="$toggleShape"/>
                 <RadioButton fx:id="selectModeButton" text="Select Shape" toggleGroup="$toggleShape"/>
-                <Button fx:id="undoButton" text="Undo" onAction="#undoButtonClicked"/>
-                <Button fx:id="saveButton" text="Save" onAction="#onSaveAction" />
+                <Button fx:id="undoButton" text="Undo" style="-fx-background-color: #FFF9CA; -fx-border-color: #AAAAAA ; -fx-border-width: 1.5" onAction="#undoButtonClicked"/>
+                <Button fx:id="saveButton" text="Save" style="-fx-background-color: #FFF9CA; -fx-border-color: #AAAAAA ; -fx-border-width: 1.5" onAction="#onSaveAction" />
             </HBox>
         </ToolBar>
     </top>
     <center>
         <VBox alignment="CENTER" prefHeight="800.0" prefWidth="700.0" style="-fx-background-color: white">
-            <Label fx:id="welcomeLabel" style="-fx-font-weight: bold" />
+            <Label fx:id="welcomeLabel" style="-fx-font-size: 16" />
             <Canvas fx:id="canvas" height="800.0" width="700.0" onMouseClicked="#onCanvasClicked"/>
 
 
