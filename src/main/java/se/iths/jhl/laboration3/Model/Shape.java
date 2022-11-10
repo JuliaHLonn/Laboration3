@@ -109,13 +109,11 @@ public abstract class Shape {
             if (shape.isSelected(xCo, yCo)) {
                 changeSize(size, shape);
                 changeColor(color, shape);
-
-// Det tar två klick att undo en färgändring, kanske den räknar med en storleksändring också liksom?
             }
         }
     }
 
-    private static void changeSize(Double size, Shape shape) {
+    public static void changeSize(Double size, Shape shape) {
         double oldWidth = shape.getWidth();
         double oldHeight = shape.getHeight();
         shape.setWidth(size);
@@ -126,13 +124,13 @@ public abstract class Shape {
         undoStack.push(undo1);
     }
 
-    private static void changeColor(Color color, Shape shape) {
+    public static void changeColor(Color color, Shape shape) {
         Color oldColor = shape.getColor();
         shape.setColor(color);
         pushColorToUndoStack(shape, oldColor);
     }
 
-    private static void pushColorToUndoStack(Shape shape, Color oldColor) {
+    public static void pushColorToUndoStack(Shape shape, Color oldColor) {
         Command undo2 = () -> shape.setColor(oldColor);
         undoStack.push(undo2);
     }

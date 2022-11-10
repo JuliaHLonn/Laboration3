@@ -30,8 +30,8 @@ public class Square extends Shape {
     @Override
     public String svgString() {
         String color = "#" + getColor().toString().substring(2, 10);
-        return "<rect xCoordinate= \""+ getXCoordinate()/2 + "\"" + " yCoordinate= \"" + getYCoordinate()/2 + "\"" +
-                " width= \"" + getWidth() + "\" height= \"" + getHeight() + "\" fill= \"" + color + "\" />";
+        return "<rect x=\""+ getXCoordinate()/2 + "\"" + " y=\"" + getYCoordinate()/2 + "\"" +
+                " width=\"" + getWidth() + "\" height=\"" + getHeight() + "\" fill=\"" + color + "\" />";
 
     }
 }

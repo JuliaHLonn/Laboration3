@@ -13,19 +13,19 @@ class ShapeTest {
     Shape shape = new Square(20, Color.AQUA, 113, 164);
     public static Deque<Command> undoStack = new ArrayDeque<>();
 
+    Color color = Color.YELLOW;
+
     Command command;
     @Test
     void checkIfColorIsChanged(){
-        var color = Color.YELLOW;
+
         shape.setColor(color);
         assertEquals(color, shape.getColor());
     }
 
     @Test
     void checkIfColorChangeHasBeenPushedToUndoStack(){
-        Color oldColor = shape.getColor();
-        Command undo2 = () -> shape.setColor(oldColor);
-        undoStack.push(undo2);
+        shape.changeColor(color, shape);
         int expectedSize = 1;
         var actual = undoStack.size();
 

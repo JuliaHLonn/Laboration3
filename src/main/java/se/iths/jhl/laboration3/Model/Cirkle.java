@@ -41,8 +41,7 @@ public class Cirkle extends Shape {
         String color = "#" + getColor().toString().substring(2, 10);
         double coordinateX = xCoordinate-(getWidth()/2);
         double coordinateY = yCoordinate-(getHeight()/2);
-        return "<cirkle xCoordinate= \""+ coordinateX + "\"" + " yCoordinate= \"" + coordinateY + "\"" +
-                " width= \"" + getWidth() + "\" height= \"" + getHeight() + "\" fill= \"" + color + "\" />";
+        return "<circle cx=\""+ coordinateX + "\"" + " cy=\"" + coordinateY + "\"" + " r=\"" + getWidth() + "\"" + " fill=\"" + color + "\" />";
 
     }
 }
