@@ -84,9 +84,9 @@ public abstract class Shape {
         return color.get();
     }
 
-    public static Shape createCirkle(double size, Color color, double x, double y) {
+    public static Shape createCircle(double size, Color color, double x, double y) {
 
-        return new Cirkle(size, color, x, y);
+        return new Circle(size, color, x, y);
     }
 
     public static Shape createRectangle(double size, Color color, double x, double y) {

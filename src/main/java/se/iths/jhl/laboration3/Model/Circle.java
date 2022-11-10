@@ -4,13 +4,13 @@ package se.iths.jhl.laboration3.Model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Cirkle extends Shape {
+public class Circle extends Shape {
 
 
 
 
 
-    public Cirkle(double size, Color color, double xCoordinate, double yCoordinate) {
+    public Circle(double size, Color color, double xCoordinate, double yCoordinate) {
         super(size,color,xCoordinate,yCoordinate);
 
 

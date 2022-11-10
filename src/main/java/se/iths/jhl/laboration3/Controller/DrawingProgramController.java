@@ -25,7 +25,7 @@ public class DrawingProgramController {
     Label welcomeLabel;
 
     @FXML
-    public RadioButton cirkleButton;
+    public RadioButton circleButton;
 
     @FXML
     public RadioButton rectangleButton;
@@ -95,8 +95,8 @@ public class DrawingProgramController {
 
     private Shape wichMode(MouseEvent mouseEvent) {
         double size = Double.parseDouble(pickSize.getText());
-        if (cirkleButton.isSelected())
-            return Shape.createCirkle(size, colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
+        if (circleButton.isSelected())
+            return Shape.createCircle(size, colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
         else
             return Shape.createRectangle(size, colorPicker.getValue(), mouseEvent.getX(), mouseEvent.getY());
     }

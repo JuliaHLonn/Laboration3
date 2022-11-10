@@ -18,7 +18,7 @@
                 <ColorPicker fx:id="colorPicker" style="-fx-background-color: white; -fx-border-color: #AAAAAA"/>
                 <Label text="Size "/>
                 <TextField fx:id="pickSize" text="20" style="-fx-border-color: #AAAAAA" />
-                <RadioButton fx:id="cirkleButton" text="Draw Cirkle" toggleGroup="$toggleShape"/>
+                <RadioButton fx:id="circleButton" text="Draw Cirkle" toggleGroup="$toggleShape"/>
                 <RadioButton fx:id="rectangleButton" text="Draw Rectangle" toggleGroup="$toggleShape"/>
                 <RadioButton fx:id="selectModeButton" text="Select Shape" toggleGroup="$toggleShape"/>
                 <Button fx:id="undoButton" text="Undo" style="-fx-background-color: #FFF9CA; -fx-border-color: #AAAAAA ; -fx-border-width: 1.5" onAction="#undoButtonClicked"/>
